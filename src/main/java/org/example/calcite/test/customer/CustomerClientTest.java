@@ -1,14 +1,16 @@
 package org.example.calcite.test.customer;
 
-import com.alibaba.fastjson.JSON;
-import com.google.common.collect.Lists;
-import com.google.common.collect.Maps;
+import org.example.calcite.test.CalciteUtils;
 import org.example.calcite.test.ResUtil;
 
-import java.sql.*;
-import java.util.List;
-import java.util.Map;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.Statement;
 
+/**
+ * CustomerClientTest
+ */
 public class CustomerClientTest {
     /**
      * 测试的时候用字符串 defaultSchema 默认数据库 name 数据库名称 type custom factory
@@ -20,7 +22,7 @@ public class CustomerClientTest {
             String model = ResUtil.getResourceAsString("model.json");
             Connection connection = DriverManager.getConnection("jdbc:calcite:model=inline:" + model);
             Statement statement = connection.createStatement();
-            test1(statement);
+            query(statement);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -33,25 +35,8 @@ public class CustomerClientTest {
      * @param statement
      * @throws Exception
      */
-    public static void test1(Statement statement) throws Exception {
-        ResultSet resultSet = statement.executeQuery("select * from test_csv.TEST01");
-        System.out.println(JSON.toJSONString(getData(resultSet)));
+    public static void query(Statement statement) throws Exception {
+        ResultSet resultSet = statement.executeQuery("select * from TEST_CSV.USERS");
+        CalciteUtils.printResultSet(resultSet);
     }
-
-
-    public static List<Map<String, Object>> getData(ResultSet resultSet) throws Exception {
-        List<Map<String, Object>> list = Lists.newArrayList();
-        ResultSetMetaData metaData = resultSet.getMetaData();
-        int columnSize = metaData.getColumnCount();
-
-        while (resultSet.next()) {
-            Map<String, Object> map = Maps.newLinkedHashMap();
-            for (int i = 1; i < columnSize + 1; i++) {
-                map.put(metaData.getColumnLabel(i), resultSet.getObject(i));
-            }
-            list.add(map);
-        }
-        return list;
-    }
-
 }

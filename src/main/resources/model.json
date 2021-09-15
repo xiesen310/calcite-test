@@ -7,7 +7,8 @@
       "type": "custom",
       "factory": "org.example.calcite.test.customer.CsvSchemaFactory",
       "operand": {
-        "dataFile": "TEST01.csv"
+        "dataFile": "TEST01.csv",
+        "ddl": "CREATE TABLE USERS ( ID VARCHAR, NAME1 VARCHAR, NAME2 VARCHAR )"
       }
     }
   ]

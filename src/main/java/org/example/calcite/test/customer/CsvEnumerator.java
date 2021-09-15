@@ -14,7 +14,7 @@ public class CsvEnumerator <E> implements Enumerator<E> {
     public CsvEnumerator(Source source) {
         try {
             this.br = new BufferedReader(source.reader());
-            this.br.readLine();
+//            this.br.readLine();
         } catch (IOException e) {
             e.printStackTrace();
         }

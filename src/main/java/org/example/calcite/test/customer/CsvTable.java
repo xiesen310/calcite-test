@@ -18,10 +18,15 @@ import java.io.*;
 import java.util.List;
 
 public class CsvTable extends AbstractTable implements ScannableTable {
+    /**
+     * 数据资源
+     */
     private Source source;
+    private String ddl;
 
-    public CsvTable(Source source) {
+    public CsvTable(Source source, String ddl) {
         this.source = source;
+        this.ddl = ddl;
     }
 
     /**
@@ -29,27 +34,20 @@ public class CsvTable extends AbstractTable implements ScannableTable {
      */
     @Override
     public RelDataType getRowType(RelDataTypeFactory relDataTypeFactory) {
-        JavaTypeFactory typeFactory = (JavaTypeFactory)relDataTypeFactory;
+        JavaTypeFactory typeFactory = (JavaTypeFactory) relDataTypeFactory;
 
         List<String> names = Lists.newLinkedList();
         List<RelDataType> types = Lists.newLinkedList();
-
-        try {
-            BufferedReader reader = new BufferedReader(new FileReader(source.file()));
-            String line = reader.readLine();
-            List<String> lines = Lists.newArrayList(line.split(","));
-            lines.forEach(column -> {
-                String name = column.split(":")[0];
-                String type = column.split(":")[1];
-                names.add(name);
-                types.add(typeFactory.createSqlType(SqlTypeName.get(type)));
-            });
-
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        String s = ddl.toUpperCase().split("\\(")[1];
+        String substring = s.substring(0, s.length() - 1);
+        List<String> lines = Lists.newArrayList(substring.split(","));
+        lines.forEach(column -> {
+            String c = column.trim();
+            String name = c.split(" ")[0];
+            String type = c.split(" ")[1];
+            names.add(name);
+            types.add(typeFactory.createSqlType(SqlTypeName.get(type)));
+        });
 
         return typeFactory.createStructType(Pair.zip(names, types));
     }
