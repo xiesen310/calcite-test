@@ -1,0 +1,18 @@
+{
+  "version": "1.0",
+  "defaultSchema": "TEST",
+  "schemas": [
+    {
+      "name": "TEST",
+      "type": "custom",
+      "factory": "org.example.calcite.test.zork.ZorkMemSchemaFactory",
+      "operand": {
+        "tables": [
+          {
+            "ddl": "CREATE TABLE USERS ( ID VARCHAR, NAME VARCHAR, DEPT_ID VARCHAR)"
+          }
+        ]
+      }
+    }
+  ]
+}
