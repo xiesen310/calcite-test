@@ -1,0 +1,21 @@
+{
+  "version": "1.0",
+  "defaultSchema": "tutorial",
+  "schemas": [ {
+    "name": "tutorial",
+    "type": "custom",
+    "factory": "org.example.calcite.test.tutorial.TutorialSchemaFactory",
+    "operand": {
+      "tables": [
+        {
+          "ddl": "D:\\tmp\\calcite-test\\src\\main\\resources\\tutorial\\user\\user.json",
+          "data": "D:\\tmp\\calcite-test\\src\\main\\resources\\tutorial\\user\\user.txt"
+        },{
+          "ddl": "D:\\tmp\\calcite-test\\src\\main\\resources\\tutorial\\role\\role.json",
+          "data": "D:\\tmp\\calcite-test\\src\\main\\resources\\tutorial\\role\\role.txt"
+        }
+      ]
+    }
+  } ]
+}
+
