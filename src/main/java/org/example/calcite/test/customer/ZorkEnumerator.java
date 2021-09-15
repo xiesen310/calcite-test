@@ -5,13 +5,13 @@ import org.apache.calcite.util.Source;
 import java.io.BufferedReader;
 import java.io.IOException;
 
-public class CsvEnumerator <E> implements Enumerator<E> {
+public class ZorkEnumerator<E> implements Enumerator<E> {
 
     private E current;
 
     private BufferedReader br;
 
-    public CsvEnumerator(Source source) {
+    public ZorkEnumerator(Source source) {
         try {
             this.br = new BufferedReader(source.reader());
 //            this.br.readLine();

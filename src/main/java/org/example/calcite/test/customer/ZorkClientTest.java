@@ -5,13 +5,14 @@ import org.example.calcite.test.ResUtil;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
-import java.sql.ResultSet;
 import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * CustomerClientTest
  */
-public class CustomerClientTest {
+public class ZorkClientTest {
     /**
      * 测试的时候用字符串 defaultSchema 默认数据库 name 数据库名称 type custom factory
      * 请求接收类，该类会实例化Schema也就是数据库类，Schema会实例化Table实现类，Table会实例化数据类。
@@ -36,7 +37,18 @@ public class CustomerClientTest {
      * @throws Exception
      */
     public static void query(Statement statement) throws Exception {
-        ResultSet resultSet = statement.executeQuery("select * from TEST_CSV.USERS");
-        CalciteUtils.printResultSet(resultSet);
+        List<String> sqlList = new ArrayList<>();
+        sqlList.add("select * from TEST.USERS");
+        sqlList.add("select * from TEST.DEPT");
+        sqlList.add("select * from TEST.DEPT GROUP BY ID,NAME");
+        sqlList.add("select u.ID , u.NAME,d.ID,d.NAME from USERS u left join DEPT d on u.DEPT_ID = d.ID");
+
+        sqlList.add("select * from XS.DEPT");
+        sqlList.add("select * from XS.USERS");
+        for (String sql : sqlList) {
+            System.out.println("----------------------------------");
+            System.out.println(sql);
+            CalciteUtils.printResultSet(statement.executeQuery(sql));
+        }
     }
 }

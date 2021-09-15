@@ -1,6 +1,7 @@
 package org.example.calcite.test.customer;
 
 import com.google.common.collect.Lists;
+import lombok.Data;
 import org.apache.calcite.DataContext;
 import org.apache.calcite.adapter.java.JavaTypeFactory;
 import org.apache.calcite.linq4j.AbstractEnumerable;
@@ -14,17 +15,17 @@ import org.apache.calcite.sql.type.SqlTypeName;
 import org.apache.calcite.util.Pair;
 import org.apache.calcite.util.Source;
 
-import java.io.*;
 import java.util.List;
 
-public class CsvTable extends AbstractTable implements ScannableTable {
+@Data
+public class ZorkTable extends AbstractTable implements ScannableTable {
     /**
      * 数据资源
      */
     private Source source;
     private String ddl;
 
-    public CsvTable(Source source, String ddl) {
+    public ZorkTable(Source source, String ddl) {
         this.source = source;
         this.ddl = ddl;
     }
@@ -57,7 +58,7 @@ public class CsvTable extends AbstractTable implements ScannableTable {
         return new AbstractEnumerable<Object[]>() {
             @Override
             public Enumerator<Object[]> enumerator() {
-                return new CsvEnumerator<>(source);
+                return new ZorkEnumerator<>(source);
             }
         };
     }

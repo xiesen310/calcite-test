@@ -1,14 +1,39 @@
 {
   "version": "1.0",
-  "defaultSchema": "TEST_CSV",
+  "defaultSchema": "TEST",
   "schemas": [
     {
-      "name": "TEST_CSV",
+      "name": "TEST",
       "type": "custom",
-      "factory": "org.example.calcite.test.customer.CsvSchemaFactory",
+      "factory": "org.example.calcite.test.customer.ZorkSchemaFactory",
       "operand": {
-        "dataFile": "TEST01.csv",
-        "ddl": "CREATE TABLE USERS ( ID VARCHAR, NAME1 VARCHAR, NAME2 VARCHAR )"
+        "tables": [
+          {
+            "dataFile": "TEST01.csv",
+            "ddl": "CREATE TABLE USERS ( ID VARCHAR, NAME VARCHAR, DEPT_ID VARCHAR )"
+          },
+          {
+            "dataFile": "TEST02.csv",
+            "ddl": "CREATE TABLE DEPT ( ID VARCHAR, NAME VARCHAR)"
+          }
+        ]
+      }
+    },
+    {
+      "name": "XS",
+      "type": "custom",
+      "factory": "org.example.calcite.test.customer.ZorkSchemaFactory",
+      "operand": {
+        "tables": [
+          {
+            "dataFile": "TEST01.csv",
+            "ddl": "CREATE TABLE USERS ( ID VARCHAR, NAME VARCHAR, DEPT_ID VARCHAR )"
+          },
+          {
+            "dataFile": "TEST02.csv",
+            "ddl": "CREATE TABLE DEPT ( ID VARCHAR, NAME VARCHAR)"
+          }
+        ]
       }
     }
   ]
